@@ -31,7 +31,7 @@ public class JobApplicationController {
     @Autowired
     private JobApplicationRepository repo;
 
-    // ✅ 1. Apply to a job
+    // 1. Apply to a job
     @PostMapping("/apply")
     public ResponseEntity<String> applyToJob(
             @RequestParam Long jobId,
@@ -62,7 +62,7 @@ public class JobApplicationController {
         return ResponseEntity.ok("Application submitted");
     }
 
-    // ✅ 2. Serve resume to be viewable in browser
+    // 2. Serve resume to be viewable in browser
     @GetMapping("/resume/{filename:.+}")
     public ResponseEntity<Resource> viewResume(@PathVariable String filename) throws MalformedURLException {
         Path filePath = Paths.get("uploads/resumes/").resolve(filename).normalize();
@@ -78,25 +78,25 @@ public class JobApplicationController {
                 .body(resource);
     }
 
-    // ✅ 3. Get job seeker’s applications
+    // 3. Get job seeker’s applications
     @GetMapping("/applied-jobs/{jobSeekerId}")
     public List<JobApplication> getApplications(@PathVariable Long jobSeekerId) {
         return service.getApplicationsByJobSeeker(jobSeekerId);
     }
 
-    // ✅ 4. Get applicants for a specific job
+    // 4. Get applicants for a specific job
     @GetMapping("/job/{jobId}/applicants")
     public List<ApplicantDTO> getApplicantsByJobId(@PathVariable Long jobId) {
         return service.getApplicantDetailsByJobId(jobId);
     }
 
-    // ✅ 5. Get application + job details for a job seeker
+    // 5. Get application + job details for a job seeker
     @GetMapping("/applied-jobs-with-details/{jobSeekerId}")
     public List<JobWithApplicationDTO> getApplicationsWithDetails(@PathVariable Long jobSeekerId) {
         return service.getApplicationsWithDetailsByJobSeeker(jobSeekerId);
     }
 
-    // ✅ 6. Update application status
+    // 6. Update application status
     @PutMapping("/{id}/status")
     public ResponseEntity<String> updateStatus(
             @PathVariable Long id,
@@ -106,7 +106,7 @@ public class JobApplicationController {
         return ResponseEntity.ok("Status updated to: " + status);
     }
 
-    // ✅ 7. Upload resume separately (if not uploaded during apply)
+    // 7. Upload resume separately (if not uploaded during apply)
     @PostMapping("/upload-resume/{applicationId}")
     public ResponseEntity<String> uploadResume(
             @PathVariable Long applicationId,
@@ -136,7 +136,7 @@ public class JobApplicationController {
         }
     }
 
-    // ✅ 8. Global exception handler
+    // 8. Global exception handler
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {
         ex.printStackTrace();
